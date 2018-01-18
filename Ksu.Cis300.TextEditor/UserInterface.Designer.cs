@@ -60,22 +60,26 @@
             // uxOpen
             // 
             this.uxOpen.Name = "uxOpen";
-            this.uxOpen.Size = new System.Drawing.Size(152, 22);
+            this.uxOpen.Size = new System.Drawing.Size(132, 22);
             this.uxOpen.Text = "Open . . .";
             this.uxOpen.Click += new System.EventHandler(this.uxOpen_Click);
             // 
             // uxSaveAs
             // 
             this.uxSaveAs.Name = "uxSaveAs";
-            this.uxSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.uxSaveAs.Size = new System.Drawing.Size(132, 22);
             this.uxSaveAs.Text = "Save As . . .";
             this.uxSaveAs.Click += new System.EventHandler(this.uxSaveAs_Click);
             // 
             // uxDisplay
             // 
+            this.uxDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.uxDisplay.Location = new System.Drawing.Point(12, 27);
             this.uxDisplay.Multiline = true;
             this.uxDisplay.Name = "uxDisplay";
+            this.uxDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.uxDisplay.Size = new System.Drawing.Size(532, 520);
             this.uxDisplay.TabIndex = 1;
             // 
