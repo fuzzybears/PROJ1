@@ -75,5 +75,73 @@ namespace Ksu.Cis300.TextEditor
         {
             MessageBox.Show("The following error occurred: " + e);
         }
+
+        /// <summary>
+        /// Rotates the given character c n positions through the alphabet whose first
+        /// letter is firstLetter and whose number of letters is alphabetLen. alphabetLen
+        /// must be positive.
+        /// </summary>
+        /// <param name="c">The character to rotate.</param>
+        /// <param name="n">The number of positions to rotate c.</param>
+        /// <param name="firstLetter">The first letter of the alphabet.</param>
+        /// <param name="alphabetLen">The number of letters in the alphabet.</param>
+        /// <returns>The result of the rotation.</returns>
+        private char Rotate(char c, int n, char firstLetter, int alphabetLen)
+        {
+            return (char)(firstLetter + (c - firstLetter + n) % alphabetLen);
+        }
+
+        /// <summary>
+        /// Encrypts a single character.
+        /// </summary>
+        /// <param name="c">The character to encrypt.</param>
+        /// <returns>The encrypted character.</returns>
+        private char Encrypt(char c)
+        {
+            if (c >= 'a' && c <= 'z')
+            {
+                return Rotate(c, 13, 'a', 26);
+            }
+            else if (c >= 'A' && c <= 'Z')
+            {
+                return Rotate(c, 13, 'A', 26);
+            }
+            else
+            {
+                return c;
+            }
+        }
+
+        /// <summary>
+        /// Handles a Click event on the "With String" menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uxEncryptWithString_Click(object sender, EventArgs e)
+        {
+            string text = uxDisplay.Text;
+            string result = "";
+            for (int i = 0; i < text.Length; i++)
+            {
+                result += Encrypt(text[i]);
+            }
+            uxDisplay.Text = result;
+        }
+
+        /// <summary>
+        /// Handles a Click event on the "With StringBuilder" event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uxEncryptWithStringBuilder_Click(object sender, EventArgs e)
+        {
+            string text = uxDisplay.Text;
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < text.Length; i++)
+            {
+                result.Append(Encrypt(text[i]));
+            }
+            uxDisplay.Text = result.ToString();
+        }
     }
 }
