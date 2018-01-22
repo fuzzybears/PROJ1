@@ -2,7 +2,7 @@
  * Author: Rod Howell
  */
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -19,6 +19,21 @@ namespace Ksu.Cis300.TextEditor
     /// </summary>
     public partial class UserInterface : Form
     {
+        /// <summary>
+        /// The history of the edits.
+        /// </summary>
+        private Stack _editHistory = new Stack();
+
+        /// <summary>
+        /// The undo history.
+        /// </summary>
+        private Stack _undoHistory = new Stack();
+
+        /// <summary>
+        /// The most recent content of the editor.
+        /// </summary>
+        private string _lastText = "";
+
         /// <summary>
         /// Constructs the GUI.
         /// </summary>
@@ -39,6 +54,11 @@ namespace Ksu.Cis300.TextEditor
                 try
                 {
                     uxDisplay.Text = File.ReadAllText(uxOpenDialog.FileName);
+                    _lastText = uxDisplay.Text;
+                    _editHistory.Clear();
+                    _undoHistory.Clear();
+                    uxUndo.Enabled = false;
+                    uxRedo.Enabled = false;
                 }
                 catch (Exception ex)
                 {
@@ -142,6 +162,160 @@ namespace Ksu.Cis300.TextEditor
                 result.Append(Encrypt(text[i]));
             }
             uxDisplay.Text = result.ToString();
+        }
+
+        /// <summary>
+        /// Records an edit made by the user.
+        /// </summary>
+        private void RecordEdit()
+        {
+            bool isDel = IsDeletion(uxDisplay, _lastText); // Indicates whether the edit was a deletion
+            int len = GetEditLength(uxDisplay, _lastText); // The length of the string inserted or deleted
+            int loc = GetEditLocation(uxDisplay, isDel, len); // The location of the edit
+            string text = uxDisplay.Text; // The current editor content
+            string editStr = GetEditString(text, _lastText, isDel, loc, len); // The string deleted or inserted
+            _lastText = text;
+            _editHistory.Push(isDel);
+            _editHistory.Push(loc);
+            _editHistory.Push(editStr);
+            _undoHistory.Clear();
+            uxUndo.Enabled = true;
+            uxRedo.Enabled = false;
+        }
+
+        /// <summary>
+        /// Returns whether text was deleted from the given string in order to obtain the contents
+        /// of the given TextBox.
+        /// </summary>
+        /// <param name="editor">The TextBox containing the result of the edit.</param>
+        /// <param name="lastContent">The string representing the text prior to the edit.</param>
+        /// <returns>Whether the edit was a deletion.</returns>
+        private bool IsDeletion(TextBox editor, string lastContent)
+        {
+            return editor.TextLength < lastContent.Length;
+        }
+
+        /// <summary>
+        /// Gets the length of the text inserted or deleted.
+        /// </summary>
+        /// <param name="editor">The TextBox containing the result of the edit.</param>
+        /// <param name="lastContent">The string representing the text prior to the edit.</param>
+        /// <returns>The length of the edit.</returns>
+        private int GetEditLength(TextBox editor, string lastContent)
+        {
+            return Math.Abs(editor.TextLength - lastContent.Length);
+        }
+
+        /// <summary>
+        /// Gets the location of the beginning of the edit.
+        /// </summary>
+        /// <param name="editor">The TextBox containing the result of the edit.</param>
+        /// <param name="isDeletion">Indicates whether the edit was a deletion.</param>
+        /// <param name="len">The length of the edit string.</param>
+        /// <returns>The location of the beginning of the edit.</returns>
+        private int GetEditLocation(TextBox editor, bool isDeletion, int len)
+        {
+            if (isDeletion)
+            {
+                return editor.SelectionStart;
+            }
+            else
+            {
+                return editor.SelectionStart - len;
+            }
+        }
+
+        /// <summary>
+        /// Gets the edit string.
+        /// </summary>
+        /// <param name="content">The current content of the TextBox.</param>
+        /// <param name="lastContent">The string representing the text prior to the edit.</param>
+        /// <param name="isDeletion">Indicates whether the edit was a deletion.</param>
+        /// <param name="editLocation">The location of the beginning of the edit.</param>
+        /// <param name="len">The length of the edit.</param>
+        /// <returns>The edit string.</returns>
+        private string GetEditString(string content, string lastContent, bool isDeletion, int editLocation, int len)
+        {
+            if (isDeletion)
+            {
+                return lastContent.Substring(editLocation, len);
+            }
+            else
+            {
+                return content.Substring(editLocation, len);
+            }
+        }
+
+        /// <summary>
+        /// Performs the given edit on the contents of the given TextBox.
+        /// </summary>
+        /// <param name="editor">The TextBox to edit.</param>
+        /// <param name="isDeletion">Indicates whether the edit is a deletion.</param>
+        /// <param name="loc">The location of the beginning of the edit.</param>
+        /// <param name="text">The text to insert or delete.</param>
+        private void DoEdit(TextBox editor, bool isDeletion, int loc, string text)
+        {
+            if (isDeletion)
+            {
+                _lastText = editor.Text.Remove(loc, text.Length);
+                editor.Text = _lastText;
+                editor.SelectionStart = loc;
+            }
+            else
+            {
+                _lastText = editor.Text.Insert(loc, text);
+                editor.Text = _lastText;
+                editor.SelectionStart = loc + text.Length;
+            }
+        }
+
+        /// <summary>
+        /// Handles a TextChanged event on the TextBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uxDisplay_TextChanged(object sender, EventArgs e)
+        {
+            if (uxDisplay.Modified)
+            {
+                RecordEdit();
+            }
+        }
+
+        /// <summary>
+        /// Handles a Click event on the Undo menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uxUndo_Click(object sender, EventArgs e)
+        {
+            string editstr = (string)_editHistory.Pop();
+            int loc = (int)_editHistory.Pop();
+            bool isDel = (bool)_editHistory.Pop();
+            _undoHistory.Push(isDel);
+            _undoHistory.Push(loc);
+            _undoHistory.Push(editstr);
+            DoEdit(uxDisplay, !isDel, loc, editstr);
+            uxRedo.Enabled = true;
+            uxUndo.Enabled = _editHistory.Count > 0;
+        }
+
+        /// <summary>
+        /// Handles a Click event on the Redo menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uxRedo_Click(object sender, EventArgs e)
+        {
+            string editStr = (string)_undoHistory.Pop();
+            int loc = (int)_undoHistory.Pop();
+            bool isDel = (bool)_undoHistory.Pop();
+            _editHistory.Push(isDel);
+            _editHistory.Push(loc);
+            _editHistory.Push(editStr);
+            DoEdit(uxDisplay, isDel, loc, editStr);
+            uxUndo.Enabled = true;
+            uxRedo.Enabled = _undoHistory.Count > 0;
         }
     }
 }
