@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ksu.Cis300.TextEditor", "Ksu.Cis300.TextEditor\Ksu.Cis300.TextEditor.csproj", "{31C3EA0A-423D-4BF6-8EB0-70EBBA7B03D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ksu.Cis300.StackLibrary", "Ksu.Cis300.StackLibrary\Ksu.Cis300.StackLibrary.csproj", "{3FD77803-7B5F-4D87-95F9-9BA74404E9B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ksu.Cis300.StackLibrary.Tests", "Ksu.Cis300.StackLibrary.Tests\Ksu.Cis300.StackLibrary.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{31C3EA0A-423D-4BF6-8EB0-70EBBA7B03D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31C3EA0A-423D-4BF6-8EB0-70EBBA7B03D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31C3EA0A-423D-4BF6-8EB0-70EBBA7B03D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD77803-7B5F-4D87-95F9-9BA74404E9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD77803-7B5F-4D87-95F9-9BA74404E9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD77803-7B5F-4D87-95F9-9BA74404E9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD77803-7B5F-4D87-95F9-9BA74404E9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
