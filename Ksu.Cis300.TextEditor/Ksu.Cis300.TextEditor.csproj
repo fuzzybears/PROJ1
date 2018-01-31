@@ -78,5 +78,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ksu.Cis300.StackLibrary\Ksu.Cis300.StackLibrary.csproj">
+      <Project>{3fd77803-7b5f-4d87-95f9-9ba74404e9b8}</Project>
+      <Name>Ksu.Cis300.StackLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,7 +2,7 @@
  * Author: Rod Howell
  */
 using System;
-using System.Collections;
+using Ksu.Cis300.StackLibrary;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -22,12 +22,12 @@ namespace Ksu.Cis300.TextEditor
         /// <summary>
         /// The history of the edits.
         /// </summary>
-        private Stack _editHistory = new Stack();
+        private Stack<object> _editHistory = new Stack<object>();
 
         /// <summary>
         /// The undo history.
         /// </summary>
-        private Stack _undoHistory = new Stack();
+        private Stack<object> _undoHistory = new Stack<object>();
 
         /// <summary>
         /// The most recent content of the editor.
@@ -316,6 +316,11 @@ namespace Ksu.Cis300.TextEditor
             DoEdit(uxDisplay, isDel, loc, editStr);
             uxUndo.Enabled = true;
             uxRedo.Enabled = _undoHistory.Count > 0;
+        }
+
+        private void UserInterface_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

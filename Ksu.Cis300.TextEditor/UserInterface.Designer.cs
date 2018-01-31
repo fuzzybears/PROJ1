@@ -35,12 +35,12 @@
             this.uxEncrypt = new System.Windows.Forms.ToolStripMenuItem();
             this.uxEncryptWithString = new System.Windows.Forms.ToolStripMenuItem();
             this.uxEncryptWithStringBuilder = new System.Windows.Forms.ToolStripMenuItem();
-            this.uxDisplay = new System.Windows.Forms.TextBox();
-            this.uxOpenDialog = new System.Windows.Forms.OpenFileDialog();
-            this.uxSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.uxEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.uxUndo = new System.Windows.Forms.ToolStripMenuItem();
             this.uxRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.uxDisplay = new System.Windows.Forms.TextBox();
+            this.uxOpenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.uxSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.uxMenuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,20 +102,6 @@
             this.uxEncryptWithStringBuilder.Text = "With StringBuilder";
             this.uxEncryptWithStringBuilder.Click += new System.EventHandler(this.uxEncryptWithStringBuilder_Click);
             // 
-            // uxDisplay
-            // 
-            this.uxDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uxDisplay.Location = new System.Drawing.Point(12, 27);
-            this.uxDisplay.MaxLength = 0;
-            this.uxDisplay.Multiline = true;
-            this.uxDisplay.Name = "uxDisplay";
-            this.uxDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxDisplay.Size = new System.Drawing.Size(532, 520);
-            this.uxDisplay.TabIndex = 1;
-            this.uxDisplay.TextChanged += new System.EventHandler(this.uxDisplay_TextChanged);
-            // 
             // uxEdit
             // 
             this.uxEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -130,7 +116,7 @@
             this.uxUndo.Enabled = false;
             this.uxUndo.Name = "uxUndo";
             this.uxUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.uxUndo.Size = new System.Drawing.Size(152, 22);
+            this.uxUndo.Size = new System.Drawing.Size(144, 22);
             this.uxUndo.Text = "Undo";
             this.uxUndo.Click += new System.EventHandler(this.uxUndo_Click);
             // 
@@ -139,9 +125,23 @@
             this.uxRedo.Enabled = false;
             this.uxRedo.Name = "uxRedo";
             this.uxRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.uxRedo.Size = new System.Drawing.Size(152, 22);
+            this.uxRedo.Size = new System.Drawing.Size(144, 22);
             this.uxRedo.Text = "Redo";
             this.uxRedo.Click += new System.EventHandler(this.uxRedo_Click);
+            // 
+            // uxDisplay
+            // 
+            this.uxDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uxDisplay.Location = new System.Drawing.Point(12, 27);
+            this.uxDisplay.MaxLength = 0;
+            this.uxDisplay.Multiline = true;
+            this.uxDisplay.Name = "uxDisplay";
+            this.uxDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.uxDisplay.Size = new System.Drawing.Size(532, 520);
+            this.uxDisplay.TabIndex = 1;
+            this.uxDisplay.TextChanged += new System.EventHandler(this.uxDisplay_TextChanged);
             // 
             // UserInterface
             // 
@@ -153,6 +153,7 @@
             this.MainMenuStrip = this.uxMenuBar;
             this.Name = "UserInterface";
             this.Text = "Text Editor";
+            this.Load += new System.EventHandler(this.UserInterface_Load);
             this.uxMenuBar.ResumeLayout(false);
             this.uxMenuBar.PerformLayout();
             this.ResumeLayout(false);
